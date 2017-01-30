@@ -29,7 +29,7 @@ public final class TechnologyOperationComponentFieldsPPS {
 
     }
 
-    public static final String PROGRESS_FOR_DAYS = "progressForDays";
+//    public static final String PROGRESS_FOR_DAYS = "progressForDays";
 
     public static final String HAS_CORRECTIONS = "hasCorrections";
 

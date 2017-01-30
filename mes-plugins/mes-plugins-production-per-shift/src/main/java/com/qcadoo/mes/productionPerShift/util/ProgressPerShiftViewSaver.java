@@ -155,7 +155,7 @@ public class ProgressPerShiftViewSaver {
 
     private Either<List<ErrorMessage>, Entity> setupTechnologyOperation(final Entity toc, final List<Entity> savedProgresses,
             final boolean hasCorrections) {
-        List<Entity> otherTypeProgresses = findProgressesMatching(toc, !hasCorrections);
+        List<Entity> otherTypeProgresses = findProgressesMatching(/*toc,*/ !hasCorrections);
         List<Entity> tocProgresses = Lists.newLinkedList(Iterables.concat(otherTypeProgresses, savedProgresses));
         toc.setField(TechnologyOperationComponentFieldsPPS.PROGRESS_FOR_DAYS, tocProgresses);
         toc.setField(TechnologyOperationComponentFieldsPPS.HAS_CORRECTIONS, hasCorrections);
@@ -165,8 +165,8 @@ public class ProgressPerShiftViewSaver {
         return Either.left(toc.getGlobalErrors());
     }
 
-    private List<Entity> findProgressesMatching(final Entity technologyOperationComponent, final boolean hasCorrections) {
-        return progressForDayDataProvider.findForOperation(technologyOperationComponent, hasCorrections);
+    private List<Entity> findProgressesMatching(/*final Entity technologyOperationComponent,*/ final boolean hasCorrections) {
+        return progressForDayDataProvider.findForOperation(/*technologyOperationComponent,*/ hasCorrections);
     }
 
     private ProgressType extractProgressType(final ViewDefinitionState view) {
@@ -271,7 +271,7 @@ public class ProgressPerShiftViewSaver {
             return progressForDay;
         } else {
             progressForDay.setField(ProgressForDayFields.CORRECTED, hasCorrections);
-            progressForDay.setField(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, technologyOperationId);
+//            progressForDay.setField(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, technologyOperationId);
             return progressForDay;
         }
     }

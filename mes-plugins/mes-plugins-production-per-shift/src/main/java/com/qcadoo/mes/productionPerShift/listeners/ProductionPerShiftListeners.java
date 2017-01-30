@@ -78,7 +78,7 @@ public class ProductionPerShiftListeners {
 
     private static final String ORDER_LOOKUP_REF = "order";
 
-    private static final String OPERATION_LOOKUP_REF = "productionPerShiftOperation";
+//    private static final String OPERATION_LOOKUP_REF = "productionPerShiftOperation";
 
     private static final String PROGRESS_ADL_REF = "progressForDays";
 

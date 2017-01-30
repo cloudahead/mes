@@ -108,7 +108,7 @@ public abstract class PpsBaseAlgorithmService {
             List<Entity> dailyProgress = dailyProgressContainer.getDailyProgress();
             if (!dailyProgress.isEmpty()) {
                 progressForDays
-                        .add(createComponent(realizationDayNumber, currentDate.toDate(), dailyProgress, shouldBeCorrected));
+                        .add(createComponent(productionPerShift, realizationDayNumber, currentDate.toDate(), dailyProgress, shouldBeCorrected));
             }
             currentDate = currentDate.plusDays(1);
             ++realizationDayNumber;
@@ -198,7 +198,7 @@ public abstract class PpsBaseAlgorithmService {
         return shiftWorkDateTime;
     }
 
-    private Entity createComponent(final int dayNumber, Date realizationDate, final List<Entity> dailyProgress,
+    private Entity createComponent(final Entity productionPerShift, final int dayNumber, Date realizationDate, final List<Entity> dailyProgress,
             boolean shouldBeCorrected) {
         Entity progressForDay = dataDefinitionService.get(ProductionPerShiftConstants.PLUGIN_IDENTIFIER,
                 ProductionPerShiftConstants.MODEL_PROGRESS_FOR_DAY).create();
@@ -208,6 +208,7 @@ public abstract class PpsBaseAlgorithmService {
         progressForDay.setField(ProgressForDayFields.ACTUAL_DATE_OF_DAY, DateUtils.toDateString(realizationDate));
         progressForDay.setField(ProgressForDayFields.DAILY_PROGRESS, dailyProgress);
         progressForDay.setField(ProgressForDayFields.CORRECTED, shouldBeCorrected);
+        progressForDay.setField(ProgressForDayFields.PRODUCTION_PER_SHIFT, productionPerShift);        
 
         return progressForDay;
     }

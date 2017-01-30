@@ -92,7 +92,7 @@ public class ProductionPerShiftDataProvider {
      * Alias for technologyOperationComponent. Use this constant when building additional search criterion for
      * #countSumOfQuantities
      */
-    public static final String TECHNOLOGY_OPERATION_COMPONENT_ALIAS = "toc_alias";
+//    public static final String TECHNOLOGY_OPERATION_COMPONENT_ALIAS = "toc_alias";
 
     /**
      * Alias for ProgressForDay. Use this constant when building additional search criterion for #countSumOfQuantities
@@ -113,8 +113,8 @@ public class ProductionPerShiftDataProvider {
     /**
      * Restrict
      */
-    public static final SearchCriterion ONLY_ROOT_OPERATIONS_CRITERIA = isNull(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT
-            + TechnologyOperationComponentFields.PARENT);
+//    public static final SearchCriterion ONLY_ROOT_OPERATIONS_CRITERIA = isNull(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT
+//            + TechnologyOperationComponentFields.PARENT);
 
     @Autowired
     private DataDefinitionService dataDefinitionService;
@@ -163,8 +163,8 @@ public class ProductionPerShiftDataProvider {
         SearchCriteriaBuilder scb = getDailyProgressDD().findWithAlias(DAILY_PROGRESS_ALIAS);
         scb.setProjection(projectionList);
         scb.createAlias(DAILY_PROGRESS_ALIAS + DOT + DailyProgressFields.PROGRESS_FOR_DAY, PROGRESS_FOR_DAY_ALIAS, JoinType.INNER);
-        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
-                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
+//        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
+//                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
         scb.add(in(PROGRESS_FOR_DAY_ALIAS + DOT + ID, pfdIds));
         if (additionalCriteria != null) {
             scb.add(additionalCriteria);
@@ -207,8 +207,8 @@ public class ProductionPerShiftDataProvider {
         SearchCriteriaBuilder scb = getDailyProgressDD().findWithAlias(DAILY_PROGRESS_ALIAS);
         scb.setProjection(projectionList);
         scb.createAlias(DAILY_PROGRESS_ALIAS + DOT + DailyProgressFields.PROGRESS_FOR_DAY, PROGRESS_FOR_DAY_ALIAS, JoinType.INNER);
-        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
-                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
+//        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
+//                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
         scb.add(in(PROGRESS_FOR_DAY_ALIAS + DOT + ID, pfdIds));
         if (additionalCriteria != null) {
             scb.add(additionalCriteria);
@@ -236,15 +236,15 @@ public class ProductionPerShiftDataProvider {
 
         SearchProjectionList projectionsList = list();
         projectionsList.add(alias(max(PROGRESS_FOR_DAY_ALIAS + DOT + ID), ID_PROJECTION));
-        projectionsList.add(groupField(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + ID));
+//        projectionsList.add(groupField(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + ID));
         projectionsList.add(groupField(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.ACTUAL_DATE_OF_DAY));
 
         SearchCriteriaBuilder scb = progressForDayDD.findWithAlias(PROGRESS_FOR_DAY_ALIAS);
         scb.setProjection(projectionsList);
-        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
-                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
-        scb.createAlias(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + TechnologyOperationComponentFields.TECHNOLOGY, TECH_ALIAS,
-                JoinType.INNER);
+//        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
+//                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
+//        scb.createAlias(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + TechnologyOperationComponentFields.TECHNOLOGY, TECH_ALIAS,
+//                JoinType.INNER);
         scb.add(eq(TECH_ALIAS + DOT + ID, technologyId));
         scb.addOrder(desc(ID_PROJECTION));
 
@@ -287,15 +287,15 @@ public class ProductionPerShiftDataProvider {
 
         SearchProjectionList projectionsList = list();
         projectionsList.add(alias(max(PROGRESS_FOR_DAY_ALIAS + DOT + ID), ID_PROJECTION));
-        projectionsList.add(groupField(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + ID));
+//        projectionsList.add(groupField(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + ID));
         projectionsList.add(groupField(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.ACTUAL_DATE_OF_DAY));
 
         SearchCriteriaBuilder scb = progressForDayDD.findWithAlias(PROGRESS_FOR_DAY_ALIAS);
         scb.setProjection(projectionsList);
-        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
-                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
-        scb.createAlias(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + TechnologyOperationComponentFields.TECHNOLOGY, TECH_ALIAS,
-                JoinType.INNER);
+//        scb.createAlias(PROGRESS_FOR_DAY_ALIAS + DOT + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
+//                TECHNOLOGY_OPERATION_COMPONENT_ALIAS, JoinType.INNER);
+//        scb.createAlias(TECHNOLOGY_OPERATION_COMPONENT_ALIAS + DOT + TechnologyOperationComponentFields.TECHNOLOGY, TECH_ALIAS,
+//                JoinType.INNER);
         scb.add(eq(TECH_ALIAS + DOT + ID, technologyId));
         scb.addOrder(desc(ID_PROJECTION));
 

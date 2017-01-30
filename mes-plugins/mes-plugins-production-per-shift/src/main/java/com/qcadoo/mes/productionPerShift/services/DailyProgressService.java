@@ -63,17 +63,17 @@ public class DailyProgressService {
      *            technologyOperationComponent
      * @return
      */
-    public Map<DailyProgressKey, Entity> getDailyProgressesWithTrackingRecords(final Entity order, final Entity operationComponent) {
+    public Map<DailyProgressKey, Entity> getDailyProgressesWithTrackingRecords(final Entity order/*, final Entity operationComponent*/) {
 
         Map<DailyProgressKey, Entity> dailyProgresses = Maps.newHashMap();
         Entity product = order.getBelongsToField(OrderFields.PRODUCT);
 
-        List<Entity> mainOutProductComponents = getMainOutProductComponentsForOrderAndProduct(order, product, operationComponent);
+        List<Entity> mainOutProductComponents = getMainOutProductComponentsForOrderAndProduct(order, product/*, operationComponent*/);
         for (Entity outProduct : mainOutProductComponents) {
             Entity trackingRecord = outProduct.getBelongsToField(TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING);
             Long shiftId = trackingRecord.getBelongsToField(ProductionTrackingFields.SHIFT).getId();
             Date startDate = trackingRecord.getDateField(ProductionTrackingFields.SHIFT_START_DAY);
-            Optional<Entity> dailyProgress = findDailyProgress(operationComponent, shiftId, startDate);
+            Optional<Entity> dailyProgress = findDailyProgress(/*operationComponent, */shiftId, startDate);
             DailyProgressKey key = new DailyProgressKey(
                     outProduct.getDecimalField(TrackingOperationProductOutComponentFields.USED_QUANTITY), shiftId, startDate);
             if (dailyProgress.isPresent()) {
@@ -83,8 +83,8 @@ public class DailyProgressService {
         return dailyProgresses;
     }
 
-    private List<Entity> getMainOutProductComponentsForOrderAndProduct(final Entity order, final Entity product,
-            final Entity operationComponent) {
+    private List<Entity> getMainOutProductComponentsForOrderAndProduct(final Entity order, final Entity product/*,
+            final Entity operationComponent*/) {
         SearchCriteriaBuilder scb = dataDefinitionService
                 .get(ProductionCountingConstants.PLUGIN_IDENTIFIER,
                         ProductionCountingConstants.MODEL_TRACKING_OPERATION_PRODUCT_OUT_COMPONENT)
@@ -93,10 +93,10 @@ public class DailyProgressService {
                         TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING, JoinType.INNER)
                 .add(SearchRestrictions.eq(TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING + ".order.id",
                         order.getId()));
-        if (operationComponent != null) {
-            scb.add(SearchRestrictions.eq(TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING
-                    + ".technologyOperationComponent.id", operationComponent.getId()));
-        }
+//        if (operationComponent != null) {
+//            scb.add(SearchRestrictions.eq(TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING
+//                    + ".technologyOperationComponent.id", operationComponent.getId()));
+//        }
         // scb.add(SearchRestrictions.eq(TrackingOperationProductOutComponentFields.PRODUCTION_TRACKING + ".state",
         // ProductionTrackingState.ACCEPTED.getStringValue()));
 
@@ -124,15 +124,15 @@ public class DailyProgressService {
         return false;
     }
 
-    public Optional<Entity> findDailyProgress(final Entity operationComponent, final Long shiftId, final Date startDate) {
+    public Optional<Entity> findDailyProgress(/*final Entity operationComponent,*/ final Long shiftId, final Date startDate) {
         List<Entity> dailyProgress = dataDefinitionService
                 .get(ProductionPerShiftConstants.PLUGIN_IDENTIFIER, ProductionPerShiftConstants.MODEL_DAILY_PROGRESS)
                 .find()
                 .createAlias(DailyProgressFields.SHIFT, DailyProgressFields.SHIFT, JoinType.INNER)
                 .createAlias(DailyProgressFields.PROGRESS_FOR_DAY, DailyProgressFields.PROGRESS_FOR_DAY, JoinType.INNER)
                 .add(SearchRestrictions.eq(DailyProgressFields.SHIFT + ".id", shiftId))
-                .add(SearchRestrictions.eq(DailyProgressFields.PROGRESS_FOR_DAY + "."
-                        + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT + ".id", operationComponent.getId()))
+//                .add(SearchRestrictions.eq(DailyProgressFields.PROGRESS_FOR_DAY + "."
+//                        + ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT + ".id", operationComponent.getId()))
                 .add(SearchRestrictions.eq(DailyProgressFields.PROGRESS_FOR_DAY + "." + ProgressForDayFields.ACTUAL_DATE_OF_DAY,
                         startDate)).list().getEntities();
         for (Entity dp : dailyProgress) {

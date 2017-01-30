@@ -193,26 +193,29 @@ public class PPSReportXlsHelper {
     }
 
     public Entity getDailyProgress(final Entity productionPerShift, final Date day, final Entity shift) {
-        Entity order = getOrder(productionPerShift);
-        Entity technology = order.getBelongsToField(OrderFields.TECHNOLOGY);
-        Entity toc = technology.getTreeField(TechnologyFields.OPERATION_COMPONENTS).getRoot();
+//        Entity order = getOrder(productionPerShift);
+//        Entity technology = order.getBelongsToField(OrderFields.TECHNOLOGY);
+//        Entity toc = technology.getTreeField(TechnologyFields.OPERATION_COMPONENTS).getRoot();
 
         DataDefinition progressForDayDD = dataDefinitionService.get(ProductionPerShiftConstants.PLUGIN_IDENTIFIER,
                 ProductionPerShiftConstants.MODEL_PROGRESS_FOR_DAY);
 
         List<Entity> correctedProgressForDay = progressForDayDD.find()
-                .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+//                .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+                .add(SearchRestrictions.belongsTo(ProgressForDayFields.PRODUCTION_PER_SHIFT, productionPerShift))
                 .add(SearchRestrictions.eq(ProgressForDayFields.CORRECTED, true)).list().getEntities();
         Entity progressForDay;
 
         if (correctedProgressForDay.isEmpty()) {
             progressForDay = progressForDayDD.find()
-                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+//                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.PRODUCTION_PER_SHIFT, productionPerShift))
                     .add(SearchRestrictions.eq(ProgressForDayFields.ACTUAL_DATE_OF_DAY, day))
                     .add(SearchRestrictions.eq(ProgressForDayFields.CORRECTED, false)).setMaxResults(1).uniqueResult();
         } else {
             progressForDay = progressForDayDD.find()
-                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+//                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, toc))
+                    .add(SearchRestrictions.belongsTo(ProgressForDayFields.PRODUCTION_PER_SHIFT, productionPerShift))
                     .add(SearchRestrictions.eq(ProgressForDayFields.ACTUAL_DATE_OF_DAY, day))
                     .add(SearchRestrictions.eq(ProgressForDayFields.CORRECTED, true)).setMaxResults(1).uniqueResult();
         }

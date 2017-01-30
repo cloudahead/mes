@@ -51,15 +51,15 @@ import java.util.*;
 @Service
 public class ProgressDatesService {
 
-    private static final Function<Entity, Long> EXTRACT_TECHNOLOGY_OPERATION_ID = new Function<Entity, Long>() {
-
-        @Override
-        public Long apply(final Entity progressForDay) {
-            return FluentOptional
-                    .fromNullable(progressForDay.getBelongsToField(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT))
-                    .flatMap(EntityUtils.getSafeIdExtractor()).or(0L);
-        }
-    };
+//    private static final Function<Entity, Long> EXTRACT_TECHNOLOGY_OPERATION_ID = new Function<Entity, Long>() {
+//
+//        @Override
+//        public Long apply(final Entity progressForDay) {
+//            return FluentOptional
+//                    .fromNullable(progressForDay.getBelongsToField(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT))
+//                    .flatMap(EntityUtils.getSafeIdExtractor()).or(0L);
+//        }
+//    };
 
     @Autowired
     private ProgressForDayDataProvider progressForDayDataProvider;

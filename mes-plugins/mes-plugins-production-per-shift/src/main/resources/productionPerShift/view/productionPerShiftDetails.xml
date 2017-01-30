@@ -177,7 +177,7 @@
                             <component type="gridLayout" name="plannedProgressGridLayout"
                                        columns="2" rows="2">
                                 <layoutElement column="1" row="1">
-                                    <component type="lookup" name="productionPerShiftOperation"
+<!--                                    <component type="lookup" name="productionPerShiftOperation"
                                                reference="productionPerShiftOperation"
                                                source="#{technology}.operationComponents"
                                                field="#{form}.technologyOperationComponent">
@@ -194,7 +194,7 @@
                                         <listener event="onSelectedEntityChange"
                                                   class="com.qcadoo.mes.productionPerShift.listeners.ProductionPerShiftListeners"
                                                   method="onTechnologyOperationChange"/>
-                                    </component>
+                                    </component>-->
                                 </layoutElement>
                                 <layoutElement column="2" row="1">
                                     <component type="lookup" name="produces" reference="produces"

@@ -36,8 +36,10 @@
 
 		<enum name="plannedProgressType" values="01planned,02corrected"
 			default="01planned" required="true" persistent="false" />
-		<belongsTo name="technologyOperationComponent" model="technologyOperationComponent"
-			plugin="technologies" persistent="false" />
+<!--		<belongsTo name="technologyOperationComponent" model="technologyOperationComponent"
+			plugin="technologies" persistent="false" />-->
+		<hasMany name="progressForDays" joinField="productionPerShift"
+		         model="progressForDay" cascade="delete" copyable="true" />
 		<belongsTo name="technology" model="technology" plugin="technologies"
 			persistent="false" />
         <datetime name="orderFinishDate"/>

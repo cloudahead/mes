@@ -62,7 +62,7 @@ public class ProgressForDayDataProvider {
 
     public static final SearchOrder[] DEFAULT_SEARCH_ORDER = new SearchOrder[] { asc(ProgressForDayFields.DAY), asc("id") };
 
-    private static final List<String> MODEL_PATH_TO_ORDER = ImmutableList.of(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,
+    private static final List<String> MODEL_PATH_TO_ORDER = ImmutableList.of(/*ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT,*/
             TechnologyOperationComponentFields.TECHNOLOGY, TechnologyFieldsO.ORDERS);
 
     private static final BiFunction<SearchCriteriaBuilder, String, SearchCriteriaBuilder> CREATE_SUB_QUERY = (acc, fieldName) -> acc
@@ -80,24 +80,24 @@ public class ProgressForDayDataProvider {
         return pfdCriteriaBuilder.list().getEntities();
     }
 
-    public List<Entity> findForOperation(final Entity technologyOperation, final ProgressType progressType) {
-        return findForOperation(technologyOperation, progressType == ProgressType.CORRECTED);
+    public List<Entity> findForOperation(/*final Entity technologyOperation,*/ final ProgressType progressType) {
+        return findForOperation(/*technologyOperation, */progressType == ProgressType.CORRECTED);
     }
 
-    public List<Entity> findForOperation(final Entity technologyOperation, final boolean hasCorrections) {
+    public List<Entity> findForOperation(/*final Entity technologyOperation, */final boolean hasCorrections) {
         return find(
-                and(eq(ProgressForDayFields.CORRECTED, hasCorrections),
-                        belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, technologyOperation)),
+                /*and(*/eq(ProgressForDayFields.CORRECTED, hasCorrections)/*,
+                        belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, technologyOperation))*/,
                 ProgressForDayDataProvider.DEFAULT_SEARCH_ORDER);
     }
 
-    public Optional<Entity> findForOperationAndActualDate(final TechnologyOperationId tocId, final ProgressType progressType,
+    public Optional<Entity> findForOperationAndActualDate(/*final TechnologyOperationId tocId,*/ final ProgressType progressType,
             final LocalDate day) {
         SearchCriteriaBuilder pfdCriteriaBuilder = getPfdDataDefinition().find();
         pfdCriteriaBuilder.add(eq(ProgressForDayFields.CORRECTED, progressType == ProgressType.CORRECTED));
-        pfdCriteriaBuilder
-                .add(belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, TechnologiesConstants.PLUGIN_IDENTIFIER,
-                        TechnologiesConstants.MODEL_TECHNOLOGY_OPERATION_COMPONENT, tocId.get()));
+//        pfdCriteriaBuilder
+//                .add(belongsTo(ProgressForDayFields.TECHNOLOGY_OPERATION_COMPONENT, TechnologiesConstants.PLUGIN_IDENTIFIER,
+//                        TechnologiesConstants.MODEL_TECHNOLOGY_OPERATION_COMPONENT, tocId.get()));
         pfdCriteriaBuilder.add(eq(ProgressForDayFields.ACTUAL_DATE_OF_DAY, day.toDate()));
         return Optional.ofNullable(pfdCriteriaBuilder.setMaxResults(1).uniqueResult());
     }
